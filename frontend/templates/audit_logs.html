@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}System Audit Logs | Crime Analysis & Prediction System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 fade-up">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-1">System Audit Logs</h3>
+            <p class="text-white-50 small mb-4">Real-time log tracking modifications made across categories, locations, and reports</p>
+            
+            <div class="table-responsive" style="max-height: 550px; overflow-y: auto;">
+                <table class="table table-dark table-striped table-custom mb-0">
+                    <thead class="sticky-top bg-dark">
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Officer</th>
+                            <th>Action</th>
+                            <th>Target Table</th>
+                            <th>Row ID</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audit-logs-table-body">
+                        <tr>
+                            <td colspan="6" class="text-center py-4"><div class="spinner-border spinner-border-sm text-primary" role="status"></div> Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/audit_logs.js"></script>
+{% endblock %}

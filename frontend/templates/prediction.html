@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}ML Crime Prediction | Crime Analysis & Prediction System{% endblock %}
+
+{% block extra_css %}
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- Prediction Controls Form -->
+    <div class="col-lg-5 fade-up">
+        <div class="glass-card mb-4">
+            <h3 class="fw-bold mb-1">Predict Crime Risk</h3>
+            <p class="text-white-50 small mb-4">Select parameters for Random Forest classifier inference</p>
+            
+            <form id="prediction-form">
+                <div class="mb-3">
+                    <label for="predict-location" class="form-label text-white-50">Target Location Area</label>
+                    <select class="form-select form-select-custom" id="predict-location" required>
+                        <option value="" disabled selected>Loading locations...</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="predict-hour" class="form-label text-white-50">Target Time (Hour of Day)</label>
+                    <input type="range" class="form-range" id="predict-hour" min="0" max="23" value="12" oninput="this.nextElementSibling.value = this.value + ':00'">
+                    <output class="text-primary fw-bold mt-1 d-block text-end">12:00</output>
+                </div>
+                
+                <button type="submit" class="btn btn-grad w-100 py-2"><i class="bi bi-cpu me-1"></i> Run Predictor Model</button>
+            </form>
+        </div>
+        
+        <!-- Results Card (Hidden by default) -->
+        <div class="glass-card d-none" id="prediction-result-card" style="border-left: 5px solid var(--primary-grad);">
+            <h4 class="fw-bold mb-3"><i class="bi bi-cpu text-primary me-2"></i>Inference Results</h4>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <span class="text-white-50 small">Predicted Crime Category:</span>
+                        <div class="fs-5 fw-bold text-white mt-1" id="res-category">-</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="text-white-50 small">Severity Level:</span>
+                        <div class="mt-1"><span class="badge" id="res-severity">-</span></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="text-white-50 small">Calculated Risk Score:</span>
+                        <div class="fs-4 fw-bold text-white mt-1" id="res-risk-score">0.0/10</div>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span class="text-white-50 small">Risk Level Visualized:</span>
+                        <div class="meter-container mt-2">
+                            <div class="meter-fill" id="res-meter-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <span class="text-white-50 small">Feature Importance:</span>
+                    <div class="position-relative mt-2" style="height: 180px; width: 100%;">
+                        <canvas id="feature-importance-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <span class="text-white-50 small">Geospatial Risk Mapping:</span>
+                <div id="prediction-map" class="mt-2"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- History Column -->
+    <div class="col-lg-7 fade-up" style="animation-delay: 0.1s;">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-1">Prediction Queries History</h3>
+            <p class="text-white-50 small mb-4">Historical log of queries triggered on this server</p>
+            
+            <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+                <table class="table table-dark table-striped table-custom mb-0">
+                    <thead class="sticky-top bg-dark">
+                        <tr>
+                            <th>Location</th>
+                            <th>Time</th>
+                            <th>Predicted Crime</th>
+                            <th>Risk Score</th>
+                            <th>Query Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prediction-history-body">
+                        <tr>
+                            <td colspan="5" class="text-center py-4"><div class="spinner-border spinner-border-sm text-primary" role="status"></div> Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/prediction.js"></script>
+{% endblock %}

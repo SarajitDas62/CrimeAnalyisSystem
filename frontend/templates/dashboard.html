@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Crime Analysis & Prediction System{% endblock %}
+
+{% block content %}
+<!-- Welcome Section -->
+<div class="row mb-4 fade-up">
+    <div class="col-12">
+        <div class="p-4 rounded-4" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%); border: 1px solid var(--card-border);">
+            <h1 class="fw-bold mb-1">Incident Control Center</h1>
+            <p class="text-white-50 mb-0">Unified system for real-time reporting, aggregate analytics, and ML-powered risk prediction</p>
+        </div>
+    </div>
+</div>
+
+<!-- KPI Cards Grid -->
+<div class="row g-4 mb-5 fade-up" style="animation-delay: 0.1s;">
+    <!-- Total Crimes -->
+    <div class="col-md-4 col-sm-6">
+        <div class="glass-card text-center">
+            <i class="bi bi-shield-exclamation text-primary fs-2"></i>
+            <p class="text-white-50 small mt-2 mb-0">Total Incidents Reported</p>
+            <div class="kpi-num" id="kpi-total-reports">0</div>
+        </div>
+    </div>
+    
+    <!-- Resolved -->
+    <div class="col-md-4 col-sm-6">
+        <div class="glass-card text-center">
+            <i class="bi bi-shield-check text-success fs-2"></i>
+            <p class="text-white-50 small mt-2 mb-0">Cases Resolved</p>
+            <div class="kpi-num" id="kpi-resolved-reports">0</div>
+        </div>
+    </div>
+    
+    <!-- Pending -->
+    <div class="col-md-4 col-sm-6">
+        <div class="glass-card text-center">
+            <i class="bi bi-shield-fill-exclamation text-danger fs-2"></i>
+            <p class="text-white-50 small mt-2 mb-0">Pending Cases</p>
+            <div class="kpi-num" id="kpi-pending-reports">0</div>
+        </div>
+    </div>
+
+    <!-- Active Jurisdictions -->
+    <div class="col-md-4 col-sm-6">
+        <div class="glass-card text-center">
+            <i class="bi bi-geo-alt text-warning fs-2"></i>
+            <p class="text-white-50 small mt-2 mb-0">Active Jurisdictions</p>
+            <div class="kpi-num" id="kpi-total-locations">0</div>
+        </div>
+    </div>
+    
+    <!-- Crime Types -->
+    <div class="col-md-4 col-sm-6">
+        <div class="glass-card text-center">
+            <i class="bi bi-grid-3x3-gap text-info fs-2"></i>
+            <p class="text-white-50 small mt-2 mb-0">Registered Crime Types</p>
+            <div class="kpi-num" id="kpi-total-categories">0</div>
+        </div>
+    </div>
+    
+    <!-- Resolution Rate -->
+    <div class="col-md-4 col-sm-6">
+        <div class="glass-card text-center">
+            <i class="bi bi-percent text-light fs-2"></i>
+            <p class="text-white-50 small mt-2 mb-0">Resolution Rate</p>
+            <div class="kpi-num" id="kpi-resolution-rate">0%</div>
+        </div>
+    </div>
+</div>
+
+<!-- Geospatial Mapping Section -->
+<div class="row mb-4 fade-up" style="animation-delay: 0.15s;">
+    <div class="col-12">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-3"><i class="bi bi-map text-primary me-2"></i>Real-time Geospatial Hotspots Map</h3>
+            <div id="dashboard-map"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Reports Table -->
+<div class="row fade-up" style="animation-delay: 0.2s;">
+    <div class="col-12">
+        <div class="glass-card">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="fw-bold mb-1">Recent Crime Incidents</h3>
+                    <p class="text-white-50 small mb-0">Latest 5 reported logs in the database</p>
+                </div>
+                <a href="/crime-management/" class="btn btn-sm btn-outline-light"><i class="bi bi-plus-lg me-1"></i> Register New</a>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-dark table-striped table-custom mb-0">
+                    <thead>
+                        <tr>
+                            <th>Incident ID</th>
+                            <th>Incident Type</th>
+                            <th>Location Area</th>
+                            <th>Occurred Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-reports-table-body">
+                        <tr>
+                            <td colspan="5" class="text-center py-4"><div class="spinner-border spinner-border-sm text-primary" role="status"></div> Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}

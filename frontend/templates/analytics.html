@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics Dashboard | Crime Analysis & Prediction System{% endblock %}
+
+{% block extra_css %}
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4 fade-up">
+    <div class="col-12">
+        <h2 class="fw-bold">Crime Statistics & Visualizations</h2>
+        <p class="text-white-50">Exploratory data analysis of historical crime reports</p>
+    </div>
+</div>
+
+<!-- Charts Grid -->
+<div class="row g-4 mb-4">
+    <!-- Category Chart -->
+    <div class="col-md-6 fade-up">
+        <div class="glass-card" style="height: 400px;">
+            <h4 class="fw-bold mb-3"><i class="bi bi-pie-chart text-primary me-2"></i>Crime Type Distribution</h4>
+            <div id="category-chart-container" class="position-relative h-100" style="max-height: 300px;">
+                <canvas id="category-chart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Area Chart -->
+    <div class="col-md-6 fade-up" style="animation-delay: 0.1s;">
+        <div class="glass-card" style="height: 400px;">
+            <h4 class="fw-bold mb-3"><i class="bi bi-bar-chart-steps text-primary me-2"></i>Top 10 High-Risk Areas</h4>
+            <div id="area-chart-container" class="position-relative h-100" style="max-height: 300px;">
+                <canvas id="area-chart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hourly Chart -->
+    <div class="col-md-6 fade-up" style="animation-delay: 0.2s;">
+        <div class="glass-card" style="height: 400px;">
+            <h4 class="fw-bold mb-3"><i class="bi bi-graph-up text-primary me-2"></i>Hourly Crime Frequency</h4>
+            <div id="hourly-chart-container" class="position-relative h-100" style="max-height: 300px;">
+                <canvas id="hourly-chart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Weekday Chart -->
+    <div class="col-md-6 fade-up" style="animation-delay: 0.3s;">
+        <div class="glass-card" style="height: 400px;">
+            <h4 class="fw-bold mb-3"><i class="bi bi-calendar-week text-primary me-2"></i>Weekday Incident Frequency</h4>
+            <div id="weekday-chart-container" class="position-relative h-100" style="max-height: 300px;">
+                <canvas id="weekday-chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/analytics.js"></script>
+{% endblock %}
