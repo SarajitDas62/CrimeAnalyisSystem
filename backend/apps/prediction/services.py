@@ -1,8 +1,11 @@
+import logging
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from apps.crime_data.models import CrimeReport, Location, CrimeCategory, AuditLog
 from .models import PredictionRecord
+
+logger = logging.getLogger(__name__)
 
 
 class PredictionService:
@@ -59,8 +62,8 @@ class PredictionService:
             try:
                 pred_category_id = int(model.predict(X_input)[0])
                 predicted_category = CrimeCategory.objects.get(id=pred_category_id)
-            except Exception:
-                pass
+            except Exception as e:
+                logger.error(f"Error during RandomForest inference: {e}", exc_info=True)
 
         # Fallback if model not trained or prediction fails
         if not predicted_category:

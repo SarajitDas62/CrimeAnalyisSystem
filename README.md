@@ -1,5 +1,11 @@
 # Crime Analysis & Prediction System (CAPS) 🚓🔮
 
+[![Python](https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/Django-4.2-092E20?style=for-the-badge&logo=django&logoColor=white)](https://djangoproject.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/badge/Build-Passing-success?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/)
+
 An enterprise-grade, machine-learning-powered web application designed for real-time crime incident reporting, geospatial visualization, statistical analysis, and predictive risk assessment.
 
 ---
@@ -8,39 +14,7 @@ An enterprise-grade, machine-learning-powered web application designed for real-
 
 CAPS is engineered following a clean, decoupled **Three-Tier Architecture** ensuring high separation of concerns:
 
-```mermaid
-graph TD
-    subgraph Presentation_Layer [Presentation Layer]
-        HTML[Bootstrap 5 templates]
-        JS[ES6 JS Modules]
-        Leaflet[Leaflet.js Maps]
-        ChartJS[Chart.js Visualizations]
-    end
-
-    subgraph Application_Layer [Application Layer]
-        DRF[Django REST Framework API]
-        JWT[SimpleJWT Authentication]
-        RF[Random Forest Classifier]
-        Serv[Service Layer Logic]
-    end
-
-    subgraph Database_Layer [Database Layer]
-        PG[PostgreSQL DB]
-        SQL[SQLite3 Fallback]
-        Audit[Database Audit Trail Log]
-    end
-
-    HTML -->|HTTP requests| DRF
-    JS -->|AJAX Fetch / Bearer Token| DRF
-    Leaflet -->|Display coordinates| JS
-    ChartJS -->|Render stats| JS
-    DRF -->|JWT Validation| JWT
-    DRF -->|Request Handlers| Serv
-    Serv -->|ML inference| RF
-    Serv -->|Query / Save| PG
-    Serv -->|Query / Save| SQL
-    PG -->|Trigger logs| Audit
-```
+![CAPS Architecture Diagram](docs/architecture.png)
 
 ### Key Tiers:
 1. **Presentation Tier:** Server-rendered HTML templates utilizing **Bootstrap 5** and modular **Vanilla JS ES6** elements to invoke REST API endpoints asynchronously. Map rendering is powered by **Leaflet.js** and charts by **Chart.js**.
@@ -49,51 +23,31 @@ graph TD
 
 ---
 
+## 🖥️ Screen Visualizations & Mockups
+
+The CAPS web application is designed with custom dark-mode aesthetics using glassmorphic UI cards, subtle radial background gradients, and Outfit/Inter typography.
+
+### 1. Incident Control Dashboard
+![Incident Control Dashboard Screen](docs/screenshots/dashboard.png)
+* Centered around a **Real-time Geospatial Hotspots Map** loading Leaflet dark-theme maps. Hovering or clicking severity pins reveals incident description, category, and date parameters.
+* Real-time metrics grid animating counts for total reports, resolution rate, active jurisdictions, and pending statuses.
+
+### 2. ML Prediction Desk
+![ML Prediction Desk Screen](docs/screenshots/prediction.png)
+* Side-by-side split screen showing a parameter input form (location selector and hour of day slider) on the left, and inference results on the right.
+* Visualizes risk radius overlay circles on the map and includes a **Model Feature Importance Chart** (horizontal Chart.js bar graph) illustrating feature weights.
+
+### 3. Incident Management Portal
+* Centralized grid displaying all reports. Analysts and Admins see interactive status selection menus to update logs instantly.
+
+### 4. Audit Log Panel
+* Tabular panel for security monitoring, tracking timestamps, actor names, target row IDs, and audit details.
+
+---
+
 ## 📁 Repository Folder Structure
 
-```
-crime-analysis-system/
-├── .github/                 # Automated CI/CD pipelines
-│   └── workflows/
-│       └── ci.yml           # GitHub Actions workflow running test suites
-│
-├── backend/                 # Backend Services & APIs
-│   ├── config/              # Django settings, WSGI, ASGI, and urls configurations
-│   └── apps/                # Django application modules
-│       ├── authentication/  # JWT-based authentication & profiles management
-│       ├── crime_data/      # Crime incidents, locations, categories, and audit schema
-│       ├── analytics/       # Aggregation endpoints for Chart.js rendering
-│       └── prediction/      # Machine Learning training & risk inference pipelines
-│
-├── database/                # Database Scripts & Schema definition
-│   └── schema/
-│       └── init_db.sql      # Raw SQL schema definition for PostgreSQL
-│
-├── docker/                  # Containment Configurations
-│   ├── backend/
-│   │   └── Dockerfile       # Python container recipe
-│   └── db/
-│       └── init.sql         # Database initialization hook
-│
-├── frontend/                # Frontend Presentation Layer
-│   ├── templates/           # Server-rendered HTML Layouts (base, dashboard, prediction...)
-│   └── static/              # Static Assets
-│       ├── css/             # Custom custom styling (style.css)
-│       └── js/              # Client-side javascript controllers (api, auth, dashboard...)
-│
-├── tests/                   # Verification Suite
-│   ├── conftest.py          # Pytest setup and test database bindings
-│   └── test_integration.py  # Automated integration test specifications
-│
-├── requirements/            # Application Dependencies
-│   └── requirements.txt     # Python library list
-│
-├── requirements.txt         # Root-level requirements shortcut
-├── render.yaml              # Render Infrastructure-as-Code deployment file
-├── docker-compose.yml       # Docker orchestrator configuration
-├── .env.example             # Template for local secret environment variables
-└── README.md                # Project documentation
-```
+For a detailed explanation of every file and folder in this repository, see the dedicated [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) file.
 
 ---
 
@@ -105,26 +59,6 @@ crime-analysis-system/
 * 📈 **Visual Analytics:** Complete stats page utilizing **Chart.js** displaying hourly distributions, daily frequencies, area levels, and incident categories.
 * ✍️ **Inline Status Toggling:** Authorization-guarded dropdown options for Analysts/Admins to update incident status inline, updating database tables instantly.
 * 📜 **Database Audit Log:** Automatic tracking of all database modifications (`CREATE`, `UPDATE`, `DELETE`) showing the trigger user and timestamp logs.
-
----
-
-## 🖥️ Screen Visualizations & Mockups
-
-The CAPS web application is designed with custom dark-mode aesthetics using glassmorphic UI cards, subtle radial background gradients, and Outfit/Inter typography.
-
-### 1. Incident Control Dashboard
-* Centered around a **Real-time Geospatial Hotspots Map** loading Leaflet dark-theme maps. Hovering or clicking severity pins reveals incident description, category, and date parameters.
-* Real-time metrics grid animating counts for total reports, resolution rate, active jurisdictions, and pending statuses.
-
-### 2. ML Prediction Desk
-* Side-by-side split screen showing a parameter input form (location selector and hour of day slider) on the left, and inference results on the right.
-* Visualizes risk radius overlay circles on the map and includes a **Model Feature Importance Chart** (horizontal Chart.js bar graph) illustrating feature weights.
-
-### 3. Incident Management Portal
-* Centralized grid displaying all reports. Analysts and Admins see interactive status selection menus to update logs instantly.
-
-### 4. Audit Log Panel
-* Tabular panel for security monitoring, tracking timestamps, actor names, target row IDs, and audit details.
 
 ---
 
