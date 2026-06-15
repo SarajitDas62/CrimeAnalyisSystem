@@ -1,9 +1,3 @@
-# CAPS: Crime Analysis & Prediction System
-
-A production-quality, multi-tiered full-stack system designed to log crime reports, extract aggregate spatial-temporal statistics, and predict future crime categories and risk scores using Machine Learning.
-
----
-
 ## 🏗️ Architecture Design
 
 ```mermaid
