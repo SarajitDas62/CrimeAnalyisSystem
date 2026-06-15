@@ -1,37 +1,12 @@
 ## 🏗️ Architecture Design
 
-```mermaid
-graph TD
-    subgraph Client Tier (Frontend)
-        UI[Bootstrap 5 + Vanilla JS UI]
-        Chart[Chart.js Engine]
-    end
+The application follows a three-tier architecture:
 
-    subgraph Service Tier (Backend Gateway)
-        DRF[Django REST Framework]
-        AuthService[Authentication Service]
-        CrimeService[Crime CRUD Service]
-        AnalyticsService[Analytics Engine]
-        PredictionService[Random Forest ML Pipeline]
-    end
+- Frontend: HTML, CSS, JavaScript, Bootstrap
+- Backend: Django REST Framework
+- Database: PostgreSQL
 
-    subgraph Storage Tier (Database)
-        DB[(PostgreSQL DB)]
-    end
-
-    UI -->|HTTPS + JWT| DRF
-    DRF --> AuthService
-    DRF --> CrimeService
-    DRF --> AnalyticsService
-    DRF --> PredictionService
-    
-    AuthService --> DB
-    CrimeService --> DB
-    AnalyticsService --> DB
-    PredictionService --> DB
-```
-
----
+## The system uses machine learning models for crime prediction, hotspot detection, and analytics.
 
 ## 📁 Project Structure
 
@@ -68,11 +43,13 @@ crime-analysis-system/
 ## 🛠️ Installation & Setup
 
 ### Prerequisites
+
 - Python 3.10+
 - PostgreSQL
 - Docker & Docker Compose (Optional)
 
 ### Running via Docker (Recommended)
+
 1. **Copy example environment file:**
    ```bash
    cp .env.example .env
@@ -85,9 +62,10 @@ crime-analysis-system/
    ```bash
    docker-compose ps
    ```
-The app will be running at `http://localhost:8000`.
+   The app will be running at `http://localhost:8000`.
 
 ### Running Locally (Without Docker)
+
 1. **Navigate to backend and create virtual environment:**
    ```bash
    python -m venv venv
@@ -106,13 +84,14 @@ The app will be running at `http://localhost:8000`.
    ```bash
    python backend/manage.py runserver
    ```
-Access the application locally at `http://127.0.0.1:8000`.
+   Access the application locally at `http://127.0.0.1:8000`.
 
 ---
 
 ## ⚙️ Environment Variables
 
 Configure these values in your `.env` file:
+
 - `DEBUG`: Toggle Django debug mode (`True` / `False`).
 - `SECRET_KEY`: Django secret encryption key.
 - `DB_NAME` / `DB_USER` / `DB_PASSWORD`: PostgreSQL connection settings.
@@ -123,10 +102,13 @@ Configure these values in your `.env` file:
 ## 🧪 Testing Guide
 
 Verify the entire system using the integrated test suite:
+
 ```bash
 pytest tests/
 ```
+
 Or run Django's native test command:
+
 ```bash
 python backend/manage.py test
 ```
@@ -142,4 +124,5 @@ python backend/manage.py test
 ---
 
 ## 👥 Contributors
+
 - **Lead Software Architect:** Antigravity (Advanced Agentic Coding Team, Google DeepMind)
