@@ -1,0 +1,45 @@
+services:
+  # Database Service
+  - type: db
+    name: crime-analysis-db
+    plan: free
+    databaseName: crime_analysis_db
+    user: postgres
+
+  # Web Service
+  - type: web
+    name: crime-analysis-system
+    plan: free
+    runtime: python
+    buildCommand: "pip install -r requirements/requirements.txt && python backend/manage.py collectstatic --noinput && python backend/manage.py migrate"
+    startCommand: "gunicorn --chdir backend config.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: "*"
+      # Link the database connection details automatically
+      - key: DB_HOST
+        fromDatabase:
+          name: crime-analysis-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: crime-analysis-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: crime-analysis-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: crime-analysis-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: crime-analysis-db
+          property: password
